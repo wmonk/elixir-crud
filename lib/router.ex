@@ -9,7 +9,7 @@ defmodule Communications.Router do
   end
 
   get "/emails" do
-    emails = Communications.Repo.all(Communications.Email)
+    {:ok, emails} = Communications.Repo.all(Communications.Email) |> Poison.encode
     send_resp(conn, 200, emails)
   end
 

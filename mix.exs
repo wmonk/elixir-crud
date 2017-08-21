@@ -24,6 +24,7 @@ defmodule Communications.Mixfile do
     [{:ecto, "~> 2.0"},
      {:postgrex, "~> 0.11"},
      {:plug, "~> 1.4"},
-     {:cowboy, "~> 1.1"}]
+     {:cowboy, "~> 1.1"},
+     {:poison, "~> 3.0"}]
   end
 end
