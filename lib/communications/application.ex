@@ -4,6 +4,7 @@ defmodule Communications.Application do
   @moduledoc false
 
   use Application
+  require Logger
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
@@ -12,8 +13,11 @@ defmodule Communications.Application do
     children = [
       # Starts a worker by calling: Communications.Worker.start_link(arg)
       # {Communications.Worker, arg},
-      supervisor(Communications.Repo, [])
+      supervisor(Communications.Repo, []),
+      Plug.Adapters.Cowboy.child_spec(:http, Communications.Router, [], [port: 4001])
     ]
+
+    Logger.info "Started application"
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

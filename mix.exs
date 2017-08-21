@@ -14,7 +14,7 @@ defmodule Communications.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :ecto, :postgrex],
+      extra_applications: [:logger, :ecto, :postgrex, :cowboy, :plug],
       mod: {Communications.Application, []}
     ]
   end
@@ -22,6 +22,8 @@ defmodule Communications.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [{:ecto, "~> 2.0"},
-     {:postgrex, "~> 0.11"}]
+     {:postgrex, "~> 0.11"},
+     {:plug, "~> 1.4"},
+     {:cowboy, "~> 1.1"}]
   end
 end
