@@ -14,10 +14,14 @@ defmodule Communications.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :ecto, :postgrex, :cowboy, :plug],
+      extra_applications: applications(Mix.env),
       mod: {Communications.Application, []}
     ]
   end
+
+
+  defp applications(:dev), do: applications(:all) ++ [:remix]
+  defp applications(_all), do: [:logger, :ecto, :postgrex, :cowboy, :plug]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
@@ -25,6 +29,7 @@ defmodule Communications.Mixfile do
      {:postgrex, "~> 0.11"},
      {:plug, "~> 1.4"},
      {:cowboy, "~> 1.1"},
-     {:poison, "~> 3.0"}]
+     {:poison, "~> 3.0"},
+     {:remix, "~> 0.0.1", only: :dev}]
   end
 end
