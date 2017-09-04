@@ -30,6 +30,8 @@ defmodule Communications.Mixfile do
      {:plug, "~> 1.4"},
      {:cowboy, "~> 1.1"},
      {:poison, "~> 3.0"},
-     {:remix, "~> 0.0.1", only: :dev}]
+     {:remix, "~> 0.0.1", only: :dev},
+     {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+     {:dogma, "~> 0.1", only: :dev}]
   end
 end

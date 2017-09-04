@@ -16,24 +16,24 @@ defmodule Communications.Router do
   end
 
   post "/emails" do
-    case conn.body_params do
-      %{"from" => from, "to": to} ->
-        new_email = %Communications.Email{from: from, to: to}
-        msg = case Communications.Repo.insert(new_email) do
-          {:ok, email} -> case Poison.encode(email) do
-            {:ok, msg} -> msg
-            {:invalid, what} -> what
-          end
-          {:error, email} -> email
-          _ -> "No ideaa"
-        end
-        conn
-        |> put_resp_header("Content-Type", "application/json")
-        |> send_resp(201, msg)
-      _ ->
-        IO.inspect conn.body_params
-        send_resp(conn, 400, "Bad body")
+    new_email = Communications.Email.changeset(%Communications.Email{}, conn.body_params)
+    if new_email.valid? == false do
+      errors = Ecto.Changeset.traverse_errors(new_email, fn {msg, opts} ->
+        msg
+      end)
+      conn
+      |> put_resp_header("Content-Type", "application/json")
+      |> send_resp(400, Poison.encode!(errors))
     end
+
+    msg = case Communications.Repo.insert(new_email) do
+      {:ok, email} -> Poison.encode!(email)
+      {:error, _} -> "boop"
+    end
+
+    conn
+    |> put_resp_header("Content-Type", "application/json")
+    |> send_resp(201, msg)
   end
 
   match _ do
