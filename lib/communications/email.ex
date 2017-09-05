@@ -1,5 +1,6 @@
 defmodule Communications.Email do
   use Ecto.Schema
+  import Bamboo.Email
   import Ecto.Changeset
 
   @derive {Poison.Encoder, only: [:to, :from, :subject, :sent, :id]}
@@ -18,5 +19,13 @@ defmodule Communications.Email do
     |> validate_format(:to, ~r/@/)
     |> validate_format(:from, ~r/@/)
   end
-end
 
+  def send_mail do
+    new_email()
+    |> to("foo@example.com")
+    |> from("me@example.com")
+    |> subject("Welcome!!!")
+    |> html_body("<strong>Welcome</strong>")
+    |> text_body("welcome")
+  end
+end

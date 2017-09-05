@@ -11,6 +11,10 @@ config :communications, Communications.Repo,
 
 config :communications, ecto_repos: [Communications.Repo]
 
+config :communications, Communications.Mailer,
+  adapter: Bamboo.LocalAdapter
+
+
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

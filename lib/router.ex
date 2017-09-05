@@ -8,6 +8,8 @@ defmodule Communications.Router do
     json_decoder: Poison
   plug :dispatch
 
+  forward "/sent_emails", to: Bamboo.EmailPreviewPlug
+
   get "/emails" do
     {:ok, emails} = Communications.Repo.all(Communications.Email) |> Poison.encode
     conn
@@ -30,6 +32,11 @@ defmodule Communications.Router do
       {:ok, email} -> Poison.encode!(email)
       {:error, _} -> "boop"
     end
+
+    mail = Communications.Email.send_mail
+    IO.inspect mail
+
+    mail |> Communications.Mailer.deliver_now
 
     conn
     |> put_resp_header("Content-Type", "application/json")

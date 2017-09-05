@@ -21,7 +21,7 @@ defmodule Communications.Mixfile do
 
 
   defp applications(:dev), do: applications(:all) ++ [:remix]
-  defp applications(_all), do: [:logger, :ecto, :postgrex, :cowboy, :plug]
+  defp applications(_all), do: [:logger, :ecto, :postgrex, :cowboy, :plug, :bamboo]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
@@ -30,6 +30,7 @@ defmodule Communications.Mixfile do
      {:plug, "~> 1.4"},
      {:cowboy, "~> 1.1"},
      {:poison, "~> 3.0"},
+     {:bamboo, "~> 0.8"},
      {:remix, "~> 0.0.1", only: :dev},
      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
      {:dogma, "~> 0.1", only: :dev}]
